@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant U as User
+    participant O as Orchestrator
+    participant M as Memory (SQLite)
+    participant A as Specialist Agent
+    participant T as Tool Executor
+    
+    U->>O: "I have a severe headache"
+    O->>M: Fetch last 5 messages & Profile
+    M-->>O: Profile: "35M, Hypertensive"
+    O->>O: 1. Rewrite Query
+    O->>O: 2. Route Intent -> "Neurology"
+    O->>A: 3. Execute Neurology Agent
+    A->>T: 4. Tool Call: check_vitals()
+    T-->>A: Result: "BP 160/100"
+    A-->>O: Medical Response
+    O-->>U: 5. Formatted Markdown UI

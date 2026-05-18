@@ -1,0 +1,37 @@
+graph TD
+    subgraph Client ["📱 Mobile Client (React Native)"]
+        UI["User UI/UX"]
+        Voice["Voice Layer (STT/TTS)"]
+        Dash["Health Dashboard"]
+    end
+
+    subgraph AI ["🧠 AI Orchestration Layer"]
+        Orch["Context Rewriter & Router"]
+        Agents["46 Specialist Agents"]
+        Tools["Tool Executor (SQLite)"]
+    end
+
+    subgraph Inference ["⚙️ Inference Engine"]
+        Cloud["Gemini Pro / Flash (Cloud)"]
+        Local["Llama.rn (On-Device)"]
+    end
+
+    subgraph Data ["💾 Data Layer"]
+        SQLite["Local SQLite (Offline-First)"]
+        Queue["Sync Outbox Queue"]
+        CloudDB["Firebase Firestore"]
+    end
+
+    UI --> Orch
+    Voice --> Orch
+    Orch --> Agents
+    Agents --> Tools
+    Agents --> Inference
+    Tools --> SQLite
+    SQLite --> Queue
+    Queue --> CloudDB
+    
+    classDef default fill:#1a1a24,stroke:#3b82f6,stroke-width:2px,color:#fff
+    classDef highlight fill:#064e3b,stroke:#10b981,stroke-width:2px,color:#fff
+    class Client,Data default
+    class AI,Inference highlight
